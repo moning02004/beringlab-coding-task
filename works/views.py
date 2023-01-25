@@ -1,23 +1,14 @@
 import random
-import time
 
 from django.http import HttpResponse
 
-from works.models import Work
-
-
-def f(n):
-    return 1 if n <= 1 else f(n-1) + f(n-2)
+from beringlab.celery import app
 
 
 def process_work(request):
-    tick = time.time()
     n = random.randrange(35, 42)
-
-    Work(
-        n=n,
-        result=f(n),
-        elapsed_time=str(time.time() - tick),
-    ).save()
-
-    return HttpResponse('done')
+    task_id = app.send_task("works.tasks.fibonacci", queue="fibonacci", kwargs={
+        "number": n
+    })
+    message = f"요청을 수행하고 있습니다. task_id: {task_id}"
+    return HttpResponse(message)
