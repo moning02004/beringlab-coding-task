@@ -12,6 +12,7 @@ services:
 
   web:
     container_name: web
+    platform: linux/amd64
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -38,6 +39,7 @@ services:
 
   celery_worker:
     container_name: celery_worker
+    platform: linux/amd64
     build:
       context: ./
       dockerfile: Dockerfile

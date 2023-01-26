@@ -75,15 +75,13 @@ WSGI_APPLICATION = 'beringlab.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-# db 가 docker container 로 동작하고 있을 시,
-# host 를 mac 인 경우 "host.docker.internal" 로, windows 인 경우 <container_name> 으로 명시합니다.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "postgres",
         "USER": "postgres",
         "PASSWORD": "postgres",
-        "HOST": "host.docker.internal",  # or <db's container name> or <db server ip>
+        "HOST": "db",
         "PORT": 5432,
     }
 }
