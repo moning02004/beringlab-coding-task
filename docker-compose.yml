@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  db:
+    container_name: db
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+
+  web:
+    container_name: web
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/web
+    command: bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  redis:
+    container_name: redis_server
+    image: redis
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    container_name: rmq_server
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  celery_worker:
+    container_name: celery_worker
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - web
+      - rabbitmq
+      - redis
+    command: bash -c "celery -A beringlab worker -l info -Q fibonacci"

@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 from pathlib import Path
 
 # CELERY settings
@@ -28,7 +27,7 @@ SECRET_KEY = 'django-insecure-)#t0#zh+d(@wj6hk^=3qqk(9x&d3t1d84f3loq4acwg)k7@v+c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0"]
 
 
 # Application definition
@@ -76,11 +75,14 @@ WSGI_APPLICATION = 'beringlab.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "postgres",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "host.docker.internal",  # docker container 로 동작하고 있으면 host.docker.internal 로 명시합니다.
+        "PORT": 5432,
     }
 }
 
