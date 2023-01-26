@@ -21,5 +21,6 @@ import works.views as views
 
 urlpatterns = [
     path('works/', views.process_work),
+    path('tasks/<str:task_id>/', views.check_task),
     path('admin/', admin.site.urls),
 ]
