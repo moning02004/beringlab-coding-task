@@ -16,8 +16,12 @@ def process_work(request):
 
 def check_task(request, task_id):
     task = AsyncResult(task_id)
-    message = "요청을 수행중입니다."
     if str(task.status).lower() == "success":
-        work = Work.objects.get(pk=task.result["work_id"])
-        message = f"요청이 완료되었습니다.<br><br>- 걸린 시간: {work.elapsed_time}<br>- {work.n} 번째 값: {work.result}"
+        try:
+            work = Work.objects.get(pk=task.result["work_id"])
+            message = f"요청이 완료되었습니다.<br><br>- 걸린 시간: {work.elapsed_time}<br>- {work.n} 번째 값: {work.result}"
+        except Work.DoesNotExist:
+            message = f"데이터가 존재하지 않습니다."
+    else:
+        message = "요청을 수행중입니다."
     return HttpResponse(message)
