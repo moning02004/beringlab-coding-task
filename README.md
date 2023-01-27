@@ -41,6 +41,7 @@ mkdir celery_files
 celery multi start fibo_worker -A beringlab -l info -Q fibonacci -f ./celery_files/fibonacci.log --pidfile=./celery_files/fibonacci.pid
 
 # 웹 실행
+# settings 에서 db와 redis, rabbitmq host 를 localhost 로 수정한 뒤 실행 
 python3 manage.py runserver
 
 
