@@ -49,8 +49,8 @@ python3 manage.py runserver
 
 ## 구현
 
-`/works` 에 접속하면 rabbitmq 에 작업을 넘겨 비동기적으로 동작하도록 구현했습니다.
+- `/works` 에 접속하면 rabbitmq 에 작업을 넘겨 비동기적으로 동작하도록 구현했습니다.  또한, 결과를 받아볼 수 있도록 `/tasks/<task_id>` 를 추가하였습니다.
+- `web` container 와 `celery` container 가 같은 데이터베이스를 사용해야 하기에 `db` container 를 만들어 `postgresql` 를 사용했습니다.
 
-또한, 결과를 받아볼 수 있도록 `/tasks/<task_id>` 를 추가하였습니다.
-
-`web` container 와 `celery` container 가 같은 데이터베이스를 사용해야 하기에 `db` container 를 만들어 `postgresql` 를 사용했습니다.
+- 개발 환경은 macbook air m1 으로 개발하였습니다. 
+- 테스트 환경은 macbook air m1 과 windows 10 에서 docker-compose 로 실행했을 때, 두 환경 모두 동작하는 것을 확인했습니다.
